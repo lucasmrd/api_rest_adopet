@@ -1,6 +1,7 @@
 package adopet.apiadopet.controller;
 
 import adopet.apiadopet.dto.request.CriarTutorRequest;
+import adopet.apiadopet.dto.response.MostrarTutorResponse;
 import adopet.apiadopet.entity.Tutor;
 import adopet.apiadopet.repository.TutorRepository;
 import jakarta.validation.Valid;
@@ -21,10 +22,12 @@ public class TutorController {
     @PostMapping
     public ResponseEntity criar(@RequestBody @Valid CriarTutorRequest criarTutorRequest) {
         var tutor = new Tutor(criarTutorRequest);
+        var dto = new MostrarTutorResponse(tutor);
         tutorRepository.save(tutor);
+        
+        return ResponseEntity.ok().body(dto);
 
-        System.out.println();
-
-        return ResponseEntity.ok().build();
     }
+
+
 }
