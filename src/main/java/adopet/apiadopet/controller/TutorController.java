@@ -1,5 +1,6 @@
 package adopet.apiadopet.controller;
 
+import adopet.apiadopet.dto.request.AtualizarTutorRequest;
 import adopet.apiadopet.dto.request.CriarTutorRequest;
 import adopet.apiadopet.dto.response.MostrarTutorResponse;
 import adopet.apiadopet.entity.Tutor;
@@ -33,7 +34,7 @@ public class TutorController {
         return ResponseEntity.created(uri).body(dtoResponse);
     }
 
-    @GetMapping("/tutores")
+    @GetMapping
     public ResponseEntity<Page<MostrarTutorResponse>> listarTodosOsTutores(@PageableDefault Pageable pageable) {
         var page = tutorRepository.findAll(pageable).map(MostrarTutorResponse::new);
 
@@ -51,5 +52,17 @@ public class TutorController {
 
         return ResponseEntity.ok(dtoResponse);
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody @Valid AtualizarTutorRequest atualizarTutorRequest) {
+        var tutor = tutorRepository.getReferenceById(atualizarTutorRequest.id());
+        tutor.atualizar(atualizarTutorRequest);
+        var dtoResponse = (new MostrarTutorResponse(tutor));
+
+        return ResponseEntity.ok(dtoResponse);
+    }
+
+
 
 }
