@@ -63,6 +63,14 @@ public class TutorController {
         return ResponseEntity.ok(dtoResponse);
     }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable Long id) {
+        if (!tutorRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
 
-
+        tutorRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
