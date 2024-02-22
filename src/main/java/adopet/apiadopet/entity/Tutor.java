@@ -1,5 +1,6 @@
 package adopet.apiadopet.entity;
 
+import adopet.apiadopet.dto.request.AtualizarTutorRequest;
 import adopet.apiadopet.dto.request.CriarTutorRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,5 +28,15 @@ public class Tutor {
         this.nome = criarTutorRequest.nome();
         this.email = criarTutorRequest.email();
         this.senha = criarTutorRequest.senha();
+    }
+
+    public void atualizar(AtualizarTutorRequest att) {
+        if (!(att.nome() == null || att.nome().isEmpty() || att.nome().isBlank())) {
+            this.nome = att.nome();
+        }
+
+        if (!(att.senha() == null || att.senha().isEmpty() || att.senha().isBlank())) {
+            this.senha = att.senha();
+        }
     }
 }
