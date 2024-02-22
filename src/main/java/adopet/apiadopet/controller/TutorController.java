@@ -44,5 +44,12 @@ public class TutorController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity listarTutorPorId(@PathVariable Long id) {
+        var tutor = tutorRepository.getReferenceById(id);
+        var dtoResponse = new MostrarTutorResponse(tutor);
+
+        return ResponseEntity.ok(dtoResponse);
+    }
 
 }
