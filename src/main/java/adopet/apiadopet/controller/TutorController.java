@@ -7,11 +7,11 @@ import adopet.apiadopet.repository.TutorRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
@@ -31,6 +31,17 @@ public class TutorController {
         var uri = uriBuilder.path("/api/tutor/{id}").buildAndExpand(tutor.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dtoResponse);
+    }
+
+    @GetMapping("/tutores")
+    public ResponseEntity<Page<MostrarTutorResponse>> listarTodosOsTutores(@PageableDefault Pageable pageable) {
+        var page = tutorRepository.findAll(pageable).map(MostrarTutorResponse::new);
+
+        if (page.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(page);
     }
 
 
