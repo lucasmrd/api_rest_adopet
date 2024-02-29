@@ -1,5 +1,6 @@
 package adopet.apiadopet.controller;
 
+import adopet.apiadopet.dto.request.AtualizarAbrigoRequest;
 import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import adopet.apiadopet.dto.response.MostrarAbrigoResponse;
 import adopet.apiadopet.entity.Abrigo;
@@ -56,6 +57,16 @@ public class AbrigoController {
         return ResponseEntity.ok(dtoResponse);
     }
 
-    
+    @PutMapping
+    @Transactional
+    public ResponseEntity atualizar(@RequestBody @Valid AtualizarAbrigoRequest atualizarAbrigoRequest) {
+        var abrigo = abrigoRepository.getReferenceById(atualizarAbrigoRequest.id());
+        abrigo.atualizar(atualizarAbrigoRequest);
+        var dtoResponse = new MostrarAbrigoResponse(abrigo);
+
+        return ResponseEntity.ok(dtoResponse);
+    }
+
+
 
 }
