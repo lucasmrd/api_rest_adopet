@@ -44,4 +44,18 @@ public class AbrigoController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity listarAbrigoPorId(@PathVariable Long id) {
+        if (!abrigoRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var abrigo = abrigoRepository.getReferenceById(id);
+        var dtoResponse = new MostrarAbrigoResponse(abrigo);
+
+        return ResponseEntity.ok(dtoResponse);
+    }
+
+    
+
 }
