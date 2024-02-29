@@ -67,6 +67,16 @@ public class AbrigoController {
         return ResponseEntity.ok(dtoResponse);
     }
 
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity excluir(@PathVariable Long id) {
+        if (!abrigoRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        abrigoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }
