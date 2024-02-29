@@ -1,5 +1,6 @@
 package adopet.apiadopet.entity;
 
+import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -20,4 +21,9 @@ public class Abrigo {
 
     private String nome;
     private String telefone;
+
+    public Abrigo(CriarAbrigoRequest dtoRequest) {
+        this.nome = dtoRequest.nome();
+        this.telefone = dtoRequest.telefone();
+    }
 }
