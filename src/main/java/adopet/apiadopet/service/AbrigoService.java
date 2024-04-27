@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AbrigoService {
 
     @Autowired
-    private AbrigoRepository repository;
+    private static AbrigoRepository repository;
 
     @Transactional
     public ResponseEntity criar(CriarAbrigoRequest dtoRequest, UriComponentsBuilder uriBuilder) {
@@ -66,5 +66,13 @@ public class AbrigoService {
 
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    public static Abrigo retornaAbrigo(Long id) {
+        return repository.getReferenceById(id);
+    }
+
+    public static boolean existeAbrigo(Long id) {
+        return repository.existsById(id);
     }
 }
