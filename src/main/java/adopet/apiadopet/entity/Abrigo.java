@@ -3,14 +3,12 @@ package adopet.apiadopet.entity;
 import adopet.apiadopet.dto.request.AtualizarAbrigoRequest;
 import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "t_abrigo")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
