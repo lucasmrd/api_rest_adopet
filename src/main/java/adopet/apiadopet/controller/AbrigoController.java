@@ -5,6 +5,7 @@ import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import adopet.apiadopet.dto.response.MostrarAbrigoResponse;
 import adopet.apiadopet.entity.Abrigo;
 import adopet.apiadopet.repository.AbrigoRepository;
+import adopet.apiadopet.service.AbrigoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +23,13 @@ public class AbrigoController {
     @Autowired
     private AbrigoRepository abrigoRepository;
 
+    @Autowired
+    private AbrigoService service;
+
     @PostMapping
-    @Transactional
     public ResponseEntity criar(@RequestBody @Valid CriarAbrigoRequest dtoRequest, UriComponentsBuilder uriBuilder) {
-        var abrigo = new Abrigo(dtoRequest);
-        var dtoResponse = new MostrarAbrigoResponse(abrigo);
-        abrigoRepository.save(abrigo);
 
-        var uri = uriBuilder.path("/api/abrigo/{id}").buildAndExpand(abrigo.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(dtoResponse);
+        return service.criar(dtoRequest, uriBuilder);
     }
 
     @GetMapping
