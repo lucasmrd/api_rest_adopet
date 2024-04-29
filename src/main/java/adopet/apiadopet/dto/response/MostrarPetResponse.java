@@ -10,11 +10,13 @@ public record MostrarPetResponse(
         String nome,
         String idade,
         String descriacao,
+        String imagem,
+        Boolean adotado,
         TamanhoPet porte,
         EnderecoPet enderecoPet) {
 
     public MostrarPetResponse(Pet pet) {
         this(pet.getId(), pet.getAbrigo().getId(), pet.getNome(), pet.getIdade(),
-                pet.getDescricao(), pet.getPorte(), pet.getEndereco());
+                pet.getDescricao(), pet.getImagem(), pet.getAdotado(), pet.getPorte(), pet.getEndereco());
     }
 }

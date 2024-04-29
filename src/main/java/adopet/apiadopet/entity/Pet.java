@@ -26,6 +26,8 @@ public class Pet {
     private String idade;
     private TamanhoPet porte;
     private String descricao;
+    private Boolean adotado;
+    private String imagem;
 
     @Embedded
     private EnderecoPet endereco;
@@ -41,6 +43,8 @@ public class Pet {
         this.porte = petRequest.porte();
         this.descricao = petRequest.descricao();
         this.endereco = petRequest.endereco();
+        this.adotado = petRequest.adotado();
+        this.imagem = petRequest.imagem();
     }
 
     public void atualizar(AtualizarPetRequest att, Abrigo abrigo) {
@@ -58,6 +62,14 @@ public class Pet {
 
         if (!(att.descricao() == null || att.descricao().isEmpty() || att.descricao().isBlank())) {
             this.descricao = att.descricao();
+        }
+
+        if (!(att.imagem() == null || att.imagem().isEmpty() || att.imagem().isBlank())) {
+            this.imagem = att.imagem();
+        }
+
+        if (!(att.adotado() == null)) {
+            this.adotado = att.adotado();
         }
 
         if (!(att.porte() == null)) {

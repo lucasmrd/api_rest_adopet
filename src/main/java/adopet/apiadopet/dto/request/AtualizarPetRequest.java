@@ -12,6 +12,8 @@ public record AtualizarPetRequest(
         String nome,
         String idade,
         String descricao,
+        String imagem,
+        Boolean adotado,
         TamanhoPet porte,
         EnderecoPet endereco) {
 }
