@@ -35,4 +35,15 @@ public class AdocaoService {
 
         return ResponseEntity.created(uri).body(adocaoResponse);
     }
+
+    @Transactional
+    public ResponseEntity deletarPorId(Long id) {
+        if (!repository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        repository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }
