@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class PetService {
 
     @Autowired
-    private PetRepository repository;
+    private static PetRepository repository;
 
     @Transactional
     public ResponseEntity criar(CriarPetRequest petRequest, UriComponentsBuilder uriBuilder) {
@@ -80,5 +80,9 @@ public class PetService {
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    public static Pet retornaPet(Long id) {
+        return repository.getReferenceById(id);
     }
 }
