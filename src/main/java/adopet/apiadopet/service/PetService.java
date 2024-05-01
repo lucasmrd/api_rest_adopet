@@ -1,5 +1,6 @@
 package adopet.apiadopet.service;
 
+import adopet.apiadopet.dto.obterDados.ObterDadosAbrigo;
 import adopet.apiadopet.dto.request.AtualizarPetRequest;
 import adopet.apiadopet.dto.request.CriarPetRequest;
 import adopet.apiadopet.dto.response.MostrarPetResponse;
@@ -18,11 +19,12 @@ public class PetService {
 
     @Autowired
     private PetRepository repository;
+    @Autowired
+    private ObterDadosAbrigo obterDadosAbrigo;
 
     @Transactional
     public ResponseEntity criar(CriarPetRequest petRequest, UriComponentsBuilder uriBuilder) {
-
-        var abrigo = AbrigoService.retornaAbrigo(petRequest.idAbrigo());
+        var abrigo = obterDadosAbrigo.get(petRequest.idAbrigo());
         var pet = new Pet(petRequest, abrigo);
 
         repository.save(pet);
@@ -59,12 +61,12 @@ public class PetService {
             return ResponseEntity.notFound().build();
         }
 
-        if (!AbrigoService.existeAbrigo(atualizarPetRequest.idAbrigo())) {
+        if (!obterDadosAbrigo.existeAbrigo(atualizarPetRequest.idAbrigo())) {
             return ResponseEntity.notFound().build();
         }
 
         var pet = repository.getReferenceById(id);
-        var abrigo = AbrigoService.retornaAbrigo(atualizarPetRequest.idAbrigo());
+        var abrigo = obterDadosAbrigo.get(atualizarPetRequest.idAbrigo());
 
         pet.atualizar(atualizarPetRequest, abrigo);
 
