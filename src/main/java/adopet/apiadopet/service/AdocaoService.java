@@ -1,5 +1,6 @@
 package adopet.apiadopet.service;
 
+import adopet.apiadopet.dto.obterDados.ObterDadosTutor;
 import adopet.apiadopet.dto.request.CriarAdocaoRequest;
 import adopet.apiadopet.dto.response.MostrarAdocaoResponse;
 import adopet.apiadopet.entity.Adocao;
@@ -16,10 +17,13 @@ public class AdocaoService {
     @Autowired
     private AdocaoRepository repository;
 
+    @Autowired
+    private ObterDadosTutor obterDadosTutor;
+
     @Transactional
     public ResponseEntity criar(CriarAdocaoRequest dtoRequest, UriComponentsBuilder uriBuilder) {
         var pet = PetService.retornaPet(dtoRequest.idPet());
-        var tutor = TutorService.retornaTutor(dtoRequest.idTutor());
+        var tutor = obterDadosTutor.get(dtoRequest.idTutor());
         var adocao = new Adocao(dtoRequest, pet, tutor);
         repository.save(adocao);
 
