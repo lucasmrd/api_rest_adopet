@@ -28,6 +28,7 @@ public class AdocaoService {
         var tutor = obterDadosTutor.get(dtoRequest.idTutor());
         var adocao = new Adocao(dtoRequest, pet, tutor);
         repository.save(adocao);
+        pet.setAdotado(true);
 
         var adocaoResponse = new MostrarAdocaoResponse(adocao);
 
@@ -42,7 +43,10 @@ public class AdocaoService {
             return ResponseEntity.notFound().build();
         }
 
+        var adocao = repository.getReferenceById(id);
+        var pet = adocao.getPet();
         repository.deleteById(id);
+        pet.setAdotado(false);
 
         return ResponseEntity.noContent().build();
     }

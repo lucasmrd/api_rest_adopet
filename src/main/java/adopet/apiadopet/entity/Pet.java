@@ -5,10 +5,7 @@ import adopet.apiadopet.domain.pet.TamanhoPet;
 import adopet.apiadopet.dto.request.AtualizarPetRequest;
 import adopet.apiadopet.dto.request.CriarPetRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "t_pet")
@@ -26,6 +23,8 @@ public class Pet {
     private String idade;
     private TamanhoPet porte;
     private String descricao;
+
+    @Setter
     private Boolean adotado;
     private String imagem;
 
@@ -43,8 +42,8 @@ public class Pet {
         this.porte = petRequest.porte();
         this.descricao = petRequest.descricao();
         this.endereco = petRequest.endereco();
-        this.adotado = petRequest.adotado();
         this.imagem = petRequest.imagem();
+        this.adotado = false;
     }
 
     public void atualizar(AtualizarPetRequest att, Abrigo abrigo) {
@@ -68,9 +67,6 @@ public class Pet {
             this.imagem = att.imagem();
         }
 
-        if (!(att.adotado() == null)) {
-            this.adotado = att.adotado();
-        }
 
         if (!(att.porte() == null)) {
             this.porte = att.porte();
