@@ -1,17 +1,17 @@
 package adopet.apiadopet.dto.obterDados;
 
-import adopet.apiadopet.entity.Tutor;
-import adopet.apiadopet.repository.TutorRepository;
+import adopet.apiadopet.entity.Pet;
+import adopet.apiadopet.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ObterDadosTutor {
+public class ObterDadosPet {
 
     @Autowired
-    private TutorRepository repository;
+    private PetRepository repository;
 
-    public Tutor get(Long id) {
+    public Pet get(Long id) {
         return repository.getReferenceById(id);
     }
 }
