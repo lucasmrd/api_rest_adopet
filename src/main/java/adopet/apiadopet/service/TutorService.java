@@ -19,7 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class TutorService {
 
     @Autowired
-    private TutorRepository repository;
+    private static TutorRepository repository;
 
     @Transactional
     public ResponseEntity criar(@RequestBody @Valid CriarTutorRequest criarTutorRequest, UriComponentsBuilder uriBuilder) {
@@ -65,5 +65,9 @@ public class TutorService {
 
         repository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    public static Tutor retornaTutor(Long id) {
+        return repository.getReferenceById(id);
     }
 }
