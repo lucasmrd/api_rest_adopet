@@ -36,7 +36,7 @@ public class PetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity atualizarPetPorId(@PathVariable Long id, AtualizarPetRequest atualizarPetRequest) {
+    public ResponseEntity atualizarPetPorId(@PathVariable Long id, @RequestBody AtualizarPetRequest atualizarPetRequest) {
         return service.atualizarPetPorId(id, atualizarPetRequest);
     }
 
