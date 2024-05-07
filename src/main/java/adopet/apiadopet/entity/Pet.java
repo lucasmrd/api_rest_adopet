@@ -5,10 +5,7 @@ import adopet.apiadopet.domain.pet.TamanhoPet;
 import adopet.apiadopet.dto.request.AtualizarPetRequest;
 import adopet.apiadopet.dto.request.CriarPetRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "t_pet")
@@ -24,8 +21,12 @@ public class Pet {
 
     private String nome;
     private String idade;
-    private TamanhoPet porte;
     private String descricao;
+
+    @Enumerated(EnumType.STRING)
+    private TamanhoPet porte;
+
+    @Setter
     private Boolean adotado;
     private String imagem;
 
@@ -43,8 +44,8 @@ public class Pet {
         this.porte = petRequest.porte();
         this.descricao = petRequest.descricao();
         this.endereco = petRequest.endereco();
-        this.adotado = petRequest.adotado();
         this.imagem = petRequest.imagem();
+        this.adotado = false;
     }
 
     public void atualizar(AtualizarPetRequest att, Abrigo abrigo) {
@@ -64,12 +65,12 @@ public class Pet {
             this.descricao = att.descricao();
         }
 
-        if (!(att.imagem() == null || att.imagem().isEmpty() || att.imagem().isBlank())) {
-            this.imagem = att.imagem();
-        }
-
         if (!(att.adotado() == null)) {
             this.adotado = att.adotado();
+        }
+
+        if (!(att.imagem() == null || att.imagem().isEmpty() || att.imagem().isBlank())) {
+            this.imagem = att.imagem();
         }
 
         if (!(att.porte() == null)) {

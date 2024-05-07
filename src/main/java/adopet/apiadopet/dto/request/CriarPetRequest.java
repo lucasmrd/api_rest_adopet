@@ -24,9 +24,6 @@ public record CriarPetRequest(
         TamanhoPet porte,
 
         @NotNull
-        Boolean adotado,
-
-        @NotNull
         String imagem,
 
         @NotNull
