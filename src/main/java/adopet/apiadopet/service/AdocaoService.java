@@ -51,6 +51,16 @@ public class AdocaoService {
         return ResponseEntity.ok(page);
     }
 
+    public ResponseEntity listarAdocaoPorId(Long id) {
+        if (!repository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var dtoResponse = new MostrarAdocaoResponse(repository.getReferenceById(id));
+
+        return ResponseEntity.ok(dtoResponse);
+    }
+
     @Transactional
     public ResponseEntity deletarPorId(Long id) {
         if (!repository.existsById(id)) {

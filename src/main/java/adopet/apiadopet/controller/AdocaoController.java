@@ -30,6 +30,11 @@ public class AdocaoController {
         return service.listarTodasAdocoes(pageable);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity listarAdocaoPorId(@PathVariable Long id) {
+        return service.listarAdocaoPorId(id);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deletarPorId(@PathVariable Long id) {
         return service.deletarPorId(id);
