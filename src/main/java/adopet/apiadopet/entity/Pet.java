@@ -21,8 +21,10 @@ public class Pet {
 
     private String nome;
     private String idade;
-    private TamanhoPet porte;
     private String descricao;
+
+    @Enumerated(EnumType.STRING)
+    private TamanhoPet porte;
 
     @Setter
     private Boolean adotado;
