@@ -65,10 +65,13 @@ public class Pet {
             this.descricao = att.descricao();
         }
 
+        if (!(att.adotado() == null)) {
+            this.adotado = att.adotado();
+        }
+
         if (!(att.imagem() == null || att.imagem().isEmpty() || att.imagem().isBlank())) {
             this.imagem = att.imagem();
         }
-
 
         if (!(att.porte() == null)) {
             this.porte = att.porte();
