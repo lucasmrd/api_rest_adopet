@@ -4,9 +4,9 @@ import adopet.apiadopet.dto.obterDados.ObterDadosPet;
 import adopet.apiadopet.dto.obterDados.ObterDadosTutor;
 import adopet.apiadopet.dto.request.CriarAdocaoRequest;
 import adopet.apiadopet.dto.response.MostrarAdocaoResponse;
-import adopet.apiadopet.dto.response.MostrarPetResponse;
 import adopet.apiadopet.entity.Adocao;
 import adopet.apiadopet.repository.AdocaoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,17 +45,13 @@ public class AdocaoService {
         var page = repository.findAll(pageable).map(MostrarAdocaoResponse::new);
 
         if (page.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
 
         return ResponseEntity.ok(page);
     }
 
     public ResponseEntity listarAdocaoPorId(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         var dtoResponse = new MostrarAdocaoResponse(repository.getReferenceById(id));
 
         return ResponseEntity.ok(dtoResponse);
@@ -63,10 +59,6 @@ public class AdocaoService {
 
     @Transactional
     public ResponseEntity deletarPorId(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         var adocao = repository.getReferenceById(id);
         var pet = adocao.getPet();
         repository.deleteById(id);

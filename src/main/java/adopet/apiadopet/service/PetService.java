@@ -6,6 +6,7 @@ import adopet.apiadopet.dto.request.CriarPetRequest;
 import adopet.apiadopet.dto.response.MostrarPetResponse;
 import adopet.apiadopet.entity.Pet;
 import adopet.apiadopet.repository.PetRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,21 +36,17 @@ public class PetService {
         return ResponseEntity.created(uri).body(petResponse);
     }
 
-    public ResponseEntity<Page<MostrarPetResponse>> listarTodosOsPets(Pageable pageable) {
+    public ResponseEntity<Page<MostrarPetResponse>> listarTodosOsPets(Pageable pageable) throws EntityNotFoundException {
         var page = repository.findAll(pageable).map(MostrarPetResponse::new);
 
         if (page.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
 
         return ResponseEntity.ok(page);
     }
 
     public ResponseEntity listarPetPorId(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         var dtoResponse = new MostrarPetResponse(repository.getReferenceById(id));
 
         return ResponseEntity.ok(dtoResponse);
@@ -57,14 +54,6 @@ public class PetService {
 
     @Transactional
     public ResponseEntity atualizarPetPorId(Long id, AtualizarPetRequest atualizarPetRequest) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (!obterDadosAbrigo.existeAbrigo(atualizarPetRequest.idAbrigo())) {
-            return ResponseEntity.notFound().build();
-        }
-
         var pet = repository.getReferenceById(id);
         var abrigo = obterDadosAbrigo.get(atualizarPetRequest.idAbrigo());
 
@@ -75,10 +64,6 @@ public class PetService {
 
     @Transactional
     public ResponseEntity deletarPetPorId(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();
