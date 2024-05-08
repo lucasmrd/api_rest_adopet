@@ -5,6 +5,7 @@ import adopet.apiadopet.dto.request.CriarTutorRequest;
 import adopet.apiadopet.dto.response.MostrarTutorResponse;
 import adopet.apiadopet.entity.Tutor;
 import adopet.apiadopet.repository.TutorRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,11 @@ public class TutorService {
         return ResponseEntity.created(uri).body(dtoResponse);
     }
 
-    public ResponseEntity<Page<MostrarTutorResponse>> listarTodosOsTutores(Pageable pageable) {
+    public ResponseEntity<Page<MostrarTutorResponse>> listarTodosOsTutores(Pageable pageable) throws EntityNotFoundException {
         var page = repository.findAll(pageable).map(MostrarTutorResponse::new);
 
         if (page.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
 
         return ResponseEntity.ok(page);
@@ -59,11 +60,8 @@ public class TutorService {
 
     @Transactional
     public ResponseEntity deletar(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         repository.deleteById(id);
+
         return ResponseEntity.noContent().build();
     }
 }
