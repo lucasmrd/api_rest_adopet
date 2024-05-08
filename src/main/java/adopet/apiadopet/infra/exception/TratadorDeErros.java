@@ -1,4 +1,4 @@
-package adopet.apiadopet.infra;
+package adopet.apiadopet.infra.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
