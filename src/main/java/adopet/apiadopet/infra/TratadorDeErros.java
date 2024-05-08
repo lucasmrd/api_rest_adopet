@@ -9,8 +9,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.stream.Collectors;
-
 @RestControllerAdvice
 public class TratadorDeErros {
 
