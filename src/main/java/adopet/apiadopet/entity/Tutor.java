@@ -21,22 +21,14 @@ public class Tutor {
     private Long id;
 
     private String nome;
-    private String email;
-    private String senha;
 
     public Tutor(CriarTutorRequest criarTutorRequest) {
         this.nome = criarTutorRequest.nome();
-        this.email = criarTutorRequest.email();
-        this.senha = criarTutorRequest.senha();
     }
 
     public void atualizar(AtualizarTutorRequest att) {
         if (!(att.nome() == null || att.nome().isEmpty() || att.nome().isBlank())) {
             this.nome = att.nome();
-        }
-
-        if (!(att.senha() == null || att.senha().isEmpty() || att.senha().isBlank())) {
-            this.senha = att.senha();
         }
     }
 }
