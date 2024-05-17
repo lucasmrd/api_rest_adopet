@@ -27,6 +27,9 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/api/tutor").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/api/abrigo").permitAll();
+                    req.requestMatchers(HttpMethod.DELETE, "/api/adocao").hasRole("ABRIGO");
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
