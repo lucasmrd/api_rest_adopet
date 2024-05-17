@@ -5,6 +5,7 @@ import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import adopet.apiadopet.dto.response.MostrarAbrigoResponse;
 import adopet.apiadopet.entity.Abrigo;
 import adopet.apiadopet.repository.AbrigoRepository;
+import adopet.apiadopet.repository.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,14 @@ public class AbrigoService {
     @Autowired
     private AbrigoRepository repository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Transactional
     public ResponseEntity criar(CriarAbrigoRequest dtoRequest, UriComponentsBuilder uriBuilder) {
         var abrigo = new Abrigo(dtoRequest);
+        abrigo.addRole(roleRepository.getReferenceById(2L));
+
         var dtoResponse = new MostrarAbrigoResponse(abrigo);
         repository.save(abrigo);
 

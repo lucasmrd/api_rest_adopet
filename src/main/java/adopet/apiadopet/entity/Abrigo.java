@@ -12,16 +12,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Abrigo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Abrigo extends Usuario {
 
     private String nome;
     private String telefone;
 
     public Abrigo(CriarAbrigoRequest dtoRequest) {
+        this.login = dtoRequest.login();
+        this.senha = dtoRequest.senha();
         this.nome = dtoRequest.nome();
         this.telefone = dtoRequest.telefone();
     }

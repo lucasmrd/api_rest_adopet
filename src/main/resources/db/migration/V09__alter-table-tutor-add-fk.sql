@@ -1,0 +1,1 @@
+ALTER TABLE t_tutor ADD FOREIGN KEY(id) REFERENCES t_users(id);

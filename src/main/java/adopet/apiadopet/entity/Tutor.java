@@ -13,30 +13,19 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Tutor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Tutor extends Usuario {
 
     private String nome;
-    private String email;
-    private String senha;
 
-    public Tutor(CriarTutorRequest criarTutorRequest) {
+    public Tutor(CriarTutorRequest criarTutorRequest, String senhaBcrypt) {
         this.nome = criarTutorRequest.nome();
-        this.email = criarTutorRequest.email();
-        this.senha = criarTutorRequest.senha();
+        this.login = criarTutorRequest.login();
+        this.senha = senhaBcrypt;
     }
 
     public void atualizar(AtualizarTutorRequest att) {
         if (!(att.nome() == null || att.nome().isEmpty() || att.nome().isBlank())) {
             this.nome = att.nome();
-        }
-
-        if (!(att.senha() == null || att.senha().isEmpty() || att.senha().isBlank())) {
-            this.senha = att.senha();
         }
     }
 }
