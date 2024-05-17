@@ -5,5 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 
 public record CriarTutorRequest(
         @NotBlank
-        String nome) {
+        String nome,
+
+        @NotBlank
+        @Email
+        String login,
+
+        @NotBlank
+        String senha) {
 }
