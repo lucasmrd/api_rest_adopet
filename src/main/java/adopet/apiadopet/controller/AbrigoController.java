@@ -4,6 +4,7 @@ import adopet.apiadopet.dto.request.AtualizarAbrigoRequest;
 import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import adopet.apiadopet.dto.response.MostrarAbrigoResponse;
 import adopet.apiadopet.service.AbrigoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/abrigo")
+@SecurityRequirement(name = "bearer-key")
 public class AbrigoController {
 
     @Autowired
