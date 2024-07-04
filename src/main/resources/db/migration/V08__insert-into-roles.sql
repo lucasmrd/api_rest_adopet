@@ -1,0 +1,2 @@
+INSERT IGNORE INTO t_roles (id, nome) VALUES (1, 'ROLE_TUTOR');
+INSERT IGNORE INTO t_roles (id, nome) VALUES (2, 'ROLE_ABRIGO');

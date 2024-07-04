@@ -1,4 +1,5 @@
 CREATE TABLE t_pet (
+
 	id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     idade VARCHAR(50) NOT NULL,
@@ -11,4 +12,5 @@ CREATE TABLE t_pet (
     id_abrigo BIGINT NOT NULL,
 
     FOREIGN KEY (id_abrigo) REFERENCES t_abrigo(id)
-)
+
+);

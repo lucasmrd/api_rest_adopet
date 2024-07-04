@@ -5,6 +5,8 @@ import adopet.apiadopet.dto.request.CriarAbrigoRequest;
 import adopet.apiadopet.dto.response.MostrarAbrigoResponse;
 import adopet.apiadopet.entity.Abrigo;
 import adopet.apiadopet.repository.AbrigoRepository;
+import adopet.apiadopet.repository.RoleRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,9 +21,14 @@ public class AbrigoService {
     @Autowired
     private AbrigoRepository repository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Transactional
     public ResponseEntity criar(CriarAbrigoRequest dtoRequest, UriComponentsBuilder uriBuilder) {
         var abrigo = new Abrigo(dtoRequest);
+        abrigo.addRole(roleRepository.getReferenceById(2L));
+
         var dtoResponse = new MostrarAbrigoResponse(abrigo);
         repository.save(abrigo);
 
@@ -30,21 +37,17 @@ public class AbrigoService {
         return ResponseEntity.created(uri).body(dtoResponse);
     }
 
-    public ResponseEntity<Page<MostrarAbrigoResponse>> listarTodosOsAbrigos(Pageable pageable) {
+    public ResponseEntity<Page<MostrarAbrigoResponse>> listarTodosOsAbrigos(Pageable pageable) throws EntityNotFoundException {
         var page = repository.findAll(pageable).map(MostrarAbrigoResponse::new);
 
         if (page.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
 
         return ResponseEntity.ok(page);
     }
 
     public ResponseEntity listarAbrigoPorId(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         var dtoResponse = new MostrarAbrigoResponse(repository.getReferenceById(id));
 
         return ResponseEntity.ok(dtoResponse);
@@ -60,11 +63,8 @@ public class AbrigoService {
 
     @Transactional
     public ResponseEntity excluir(Long id) {
-        if (!repository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
         repository.deleteById(id);
+
         return ResponseEntity.noContent().build();
     }
 }
