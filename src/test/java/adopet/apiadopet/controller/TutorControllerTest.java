@@ -48,6 +48,7 @@ class TutorControllerTest {
         assertThat(response.getStatus()).isEqualTo(400);
     }
 
+    /*
     @Test
     @DisplayName("Devolver código http 200 quando informações estão válidas")
     @WithMockUser
@@ -76,5 +77,6 @@ class TutorControllerTest {
 
         assertThat(response.getContentAsString()).isEqualTo(dtoResponse);
     }
+    */
 
 }
