@@ -29,6 +29,7 @@ public class SecurityConfigurations {
                     req.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/api/tutor").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/api/abrigo").permitAll();
+                    req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.requestMatchers(HttpMethod.DELETE, "/api/adocao").hasRole("ABRIGO");
                     req.anyRequest().authenticated();
                 })

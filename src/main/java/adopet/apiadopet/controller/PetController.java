@@ -4,6 +4,7 @@ import adopet.apiadopet.dto.request.AtualizarPetRequest;
 import adopet.apiadopet.dto.request.CriarPetRequest;
 import adopet.apiadopet.dto.response.MostrarPetResponse;
 import adopet.apiadopet.service.PetService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/pet")
+@SecurityRequirement(name = "bearer-key")
 public class PetController {
 
     @Autowired
