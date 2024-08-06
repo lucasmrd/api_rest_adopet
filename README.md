@@ -1,1 +1,1 @@
-API Rest da aplicação Adopet
+API Rest da aplicação Adopet.
